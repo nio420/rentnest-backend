@@ -1,0 +1,776 @@
+{
+  "info": {
+    "_postman_id": "46457b13-86ce-4af7-b79f-e88bb38fa962",
+    "name": "RentNest Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33525441"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "register user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"landlord\",\r\n  \"email\": \"l@gmail.com\",\r\n  \"password\": \"12345\",\r\n  \"profilePhoto\": \"www.facebook.com/profile\",\r\n  \"role\": \"LANDLORD\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"omit1@gmail.com\",\r\n  \"password\": \"12345\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get user",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"faruk\",\r\n  \"email\": \"omit2@gmail.com\",\r\n  \"password\": \"12345\",\r\n  \"profilePhoto\": \"www.facebook.com/profile\",\r\n  \"role\": \"TENANT\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "admin login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@rentnest.com\",\r\n  \"password\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "category",
+      "item": [
+        {
+          "name": "create categories",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"studio\",\r\n  \"description\": \"studio rental properties\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get categories",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update categoris",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Big studio\",\r\n  \"description\": \"Big studio rental properties\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/categories/42173730-8558-450c-a679-812b61ddc74e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories",
+                "42173730-8558-450c-a679-812b61ddc74e"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete categories",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/categories/42173730-8558-450c-a679-812b61ddc74e",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "categories",
+                "42173730-8558-450c-a679-812b61ddc74e"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "property",
+      "item": [
+        {
+          "name": "create property",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Darknight Appartment\",\r\n  \"description\": \"A beautiful Appartment in Dhaka.\",\r\n  \"location\": \"Dhaka\",\r\n  \"address\": \"Uttara\",\r\n  \"rentPrice\": 65000,\r\n  \"bedrooms\": 2,\r\n  \"bathrooms\": 4,\r\n  \"amenities\": [\"WiFi\",\"Parking\",\"GYM\"],\r\n  \"image\": \"https://booking.com/apartment.jpg\",\r\n  \"categoryId\": \"1924e23a-2de9-4d1c-a8c7-74a58b69fd3d\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/landlord/properties",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "landlord",
+                "properties"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update property",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Marvel Apartment\",\r\n  \"description\": \"A beautiful Apartment in Dhaka.\",\r\n  \"location\": \"Khulna\",\r\n  \"address\": \"Kazi Market\",\r\n  \"rentPrice\": 65000,\r\n  \"bedrooms\": 2,\r\n  \"bathrooms\": 4,\r\n  \"amenities\": [\"WiFi\",\"Parking\",\"Lift\"],\r\n  \"image\": \"https://booking.com/apartment.jpg\",\r\n  \"categoryId\": \"1924e23a-2de9-4d1c-a8c7-74a58b69fd3d\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/landlord/properties/57135912-c873-44af-8274-319ff608e52b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "landlord",
+                "properties",
+                "57135912-c873-44af-8274-319ff608e52b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete property",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/landlord/properties/502bc7a2-f868-40a4-b6d6-6ecb2f812bb3",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "landlord",
+                "properties",
+                "502bc7a2-f868-40a4-b6d6-6ecb2f812bb3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all property",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/properties",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get property by Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/properties/57135912-c873-44af-8274-319ff608e52b",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "properties",
+                "57135912-c873-44af-8274-319ff608e52b"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "rental",
+      "item": [
+        {
+          "name": "get rental requets as landlord",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/landlord/requests",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "landlord",
+                "requests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "send rental request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"propertyId\": \"8c0003b6-273e-4a32-81b6-d3f0149d120c\",\r\n  \"moveInDate\": \"2026-06-22\",\r\n  \"rentalMonths\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/rentals",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "rentals"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my request as tenent",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/rentals/",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "rentals",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get single request as tenant",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/rentals/93767749-0d40-41fa-bb25-69dc754a3991",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "rentals",
+                "93767749-0d40-41fa-bb25-69dc754a3991"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update rental request as landlord",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"APPROVED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/landlord/requests/93767749-0d40-41fa-bb25-69dc754a3991",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "landlord",
+                "requests",
+                "93767749-0d40-41fa-bb25-69dc754a3991"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "payment",
+      "item": [
+        {
+          "name": "create payment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rentalId\": \"93767749-0d40-41fa-bb25-69dc754a3991\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/payments/create",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/payments",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get single payment",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/payments/16f0a924-bea0-4188-a000-dc3365a3652d",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "16f0a924-bea0-4188-a000-dc3365a3652d"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "item": [
+        {
+          "name": "post reviews",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"propertyId\": \"8c0003b6-273e-4a32-81b6-d3f0149d120c\",\r\n  \"rating\": 4,\r\n  \"comment\": \"Very good property and but service is not good\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/reviews/",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "reviews",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "get all users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/admin/users",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update users",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"ACTIVE\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/admin/users/4ca26f06-832c-44c4-b8ad-9e6697d77b1c",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users",
+                "4ca26f06-832c-44c4-b8ad-9e6697d77b1c"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/admin/properties",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "properties"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all rental",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rentnest-backend-api.vercel.app/api/admin/rentals",
+              "protocol": "https",
+              "host": [
+                "rentnest-backend-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "rentals"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
