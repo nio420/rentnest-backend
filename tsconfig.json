@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noUncheckedIndexedAccess": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noUncheckedSideEffectImports": true,
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
+    "outDir": "dist",
+    "rootDir": "./"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "generated/prisma"]
+}
