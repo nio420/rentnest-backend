@@ -1,0 +1,27 @@
+model RentalRequest {
+  id String @id @default(uuid())
+
+  moveInDate   DateTime
+  rentalMonths Int
+  totalAmount  Float
+
+  status RentalStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Tenant
+  tenantId String
+  tenant   User   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  // Property
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  // Payment
+  payment Payment?
+
+  @@index([tenantId])
+  @@index([propertyId])
+  @@map("rental_requests")
+}
