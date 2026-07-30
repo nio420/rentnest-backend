@@ -9,8 +9,28 @@ const router = Router();
 router.get("/properties", propertyController.getAllProperties);
 router.get("/properties/:id", propertyController.getSingleProperty);
 
-router.post("/landlord/properties", auth(Role.LANDLORD), validateRequest(propertyValidation.createPropertyValidationSchema), propertyController.createProperty)
-router.put("/landlord/properties/:id", auth(Role.LANDLORD), validateRequest(propertyValidation.updatePropertyValidationSchema), propertyController.updateProperty)
-router.delete("/landlord/properties/:id", auth(Role.LANDLORD), propertyController.deleteProperty)
+router.get(
+  "/landlord/properties",
+  auth(Role.LANDLORD),
+  propertyController.getLandlordProperties,
+);
+
+router.post(
+  "/landlord/properties",
+  auth(Role.LANDLORD),
+  validateRequest(propertyValidation.createPropertyValidationSchema),
+  propertyController.createProperty,
+);
+router.put(
+  "/landlord/properties/:id",
+  auth(Role.LANDLORD),
+  validateRequest(propertyValidation.updatePropertyValidationSchema),
+  propertyController.updateProperty,
+);
+router.delete(
+  "/landlord/properties/:id",
+  auth(Role.LANDLORD),
+  propertyController.deleteProperty,
+);
 
 export const propertyRouter = router;

@@ -252,10 +252,40 @@ const getSinglePropertyDB = async (id: string) => {
 };
 
 
+const getLandlordPropertiesDB = async (userId: string) => {
+  const properties = await prisma.property.findMany({
+    where: {
+      landlordId: userId,
+    },
+    include: {
+      category: true,
+      landlord: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          profilePhoto: true,
+          role: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return properties;
+};
+
 export const propertyService = {
   createPropertyDB,
   updatePropertyDB,
   deletePropertyDB,
   getAllPropertiesDB,
   getSinglePropertyDB,
+  getLandlordPropertiesDB
 };
