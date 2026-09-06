@@ -4,11 +4,7 @@ import { prisma } from "../../lib/prisma";
 import { stripe } from "../../lib/stripe";
 import { handleCheckoutSession } from "./payment.utils";
 
-const createPaymentSessionDB = async (
-  rentalId: string,
-  tenantId: string
-) => {
-
+const createPaymentSessionDB = async (rentalId: string, tenantId: string) => {
   const rental = await prisma.rentalRequest.findFirst({
     where: {
       id: rentalId,
@@ -42,8 +38,8 @@ const createPaymentSessionDB = async (
       },
     ],
 
-    success_url: `${config.app_url}/payment-success`,
-    cancel_url: `${config.app_url}/payment-cancel`,
+    success_url: `${config.app_url}/payment/success?propertyId=${rental.property.id}`,
+    cancel_url: `${config.app_url}/payment/cancel`,
 
     metadata: {
       rentalRequestId: rental.id,
@@ -60,19 +56,21 @@ const confirmPaymentDB = async (payload: Buffer, signature: string) => {
   const event = stripe.webhooks.constructEvent(
     payload,
     signature,
-    config.stripe_webhook_secret
+    config.stripe_webhook_secret,
   );
 
   // 2. Filter everything except completed sessions
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    
+
     const rentalRequestId = session.metadata?.rentalRequestId;
     const tenantId = session.metadata?.tenantId;
 
-    // Guard checking 
+    // Guard checking
     if (!rentalRequestId || !tenantId) {
-      console.log("Received test event without schema database metadata. Skipping registration.");
+      console.log(
+        "Received test event without schema database metadata. Skipping registration.",
+      );
       return { received: true, simulated: true };
     }
 
@@ -86,7 +84,7 @@ const confirmPaymentDB = async (payload: Buffer, signature: string) => {
       return { received: true };
     }
 
-    // 4. Create the final Payment 
+    // 4. Create the final Payment
     await prisma.payment.create({
       data: {
         amount: (session.amount_total ?? 0) / 100,
@@ -99,29 +97,29 @@ const confirmPaymentDB = async (payload: Buffer, signature: string) => {
       },
     });
 
-    // 5. Update the parent RentalRequest status 
+    // 5. Update the parent RentalRequest status
     await prisma.rentalRequest.update({
       where: { id: rentalRequestId },
-      data: { status: "COMPLETED" }, 
+      data: { status: "COMPLETED" },
     });
 
     const rental = await prisma.rentalRequest.findUniqueOrThrow({
       where: {
-        id: rentalRequestId
+        id: rentalRequestId,
       },
       select: {
-        propertyId: true
-      }
-    })
+        propertyId: true,
+      },
+    });
 
     await prisma.property.update({
       where: {
         id: rental.propertyId,
       },
       data: {
-        status: "RENTED"
-      }
-    })
+        status: "RENTED",
+      },
+    });
 
     console.log("RentNest Payment Log Saved Successfully!");
   }
@@ -130,7 +128,6 @@ const confirmPaymentDB = async (payload: Buffer, signature: string) => {
 };
 
 const getMyPaymentsDB = async (tenantId: string) => {
-
   const payments = await prisma.payment.findMany({
     where: {
       tenantId,
@@ -143,16 +140,15 @@ const getMyPaymentsDB = async (tenantId: string) => {
         },
       },
     },
+    orderBy: {
+      paidAt: "desc",
+    },
   });
 
   return payments;
 };
 
-const getSinglePaymentDB = async (
-  paymentId: string,
-  tenantId: string
-) => {
-
+const getSinglePaymentDB = async (paymentId: string, tenantId: string) => {
   const payment = await prisma.payment.findFirstOrThrow({
     where: {
       id: paymentId,

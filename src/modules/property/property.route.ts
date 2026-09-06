@@ -15,6 +15,12 @@ router.get(
   propertyController.getLandlordProperties,
 );
 
+router.get(
+  "/landlord/dashboard",
+  auth(Role.LANDLORD),
+  propertyController.getLandlordDashboard
+);
+
 router.post(
   "/landlord/properties",
   auth(Role.LANDLORD),

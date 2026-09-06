@@ -5,28 +5,14 @@ import { adminController } from "./admin.contoller";
 
 const router = Router();
 
-router.get(
-  "/users",
-  auth(Role.ADMIN),
-  adminController.getAllUsers
-);
+router.get("/users", auth(Role.ADMIN), adminController.getAllUsers);
 
-router.patch(
-  "/users/:id",
-  auth(Role.ADMIN),
-  adminController.updateUserStatus
-);
+router.patch("/users/:id", auth(Role.ADMIN), adminController.updateUserStatus);
 
-router.get(
-  "/properties",
-  auth(Role.ADMIN),
-  adminController.getAllProperties
-);
+router.get("/properties", auth(Role.ADMIN), adminController.getAllProperties);
 
-router.get(
-  "/rentals",
-  auth(Role.ADMIN),
-  adminController.getAllRentals
-);
+router.get("/rentals", auth(Role.ADMIN), adminController.getAllRentals);
+
+router.get("/dashboard", adminController.getDashboardStats);
 
 export const adminRouter = router;

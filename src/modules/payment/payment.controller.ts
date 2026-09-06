@@ -10,7 +10,7 @@ const createPaymentSession = catchAsync(async (req: Request, res: Response) => {
 
   const result = await paymentService.createPaymentSessionDB(
     rentalId,
-    tenantId
+    tenantId,
   );
 
   SendResponse(res, {
@@ -19,9 +19,7 @@ const createPaymentSession = catchAsync(async (req: Request, res: Response) => {
     message: "Stripe checkout session created successfully!",
     data: result,
   });
-
 });
-
 
 const confirmPayment = async (req: Request, res: Response) => {
   console.log("Incoming Webhook Connection Detected...");
@@ -51,7 +49,6 @@ const getMyPayments = catchAsync(async (req, res) => {
     message: "Payments fetched successfully!",
     data: result,
   });
-
 });
 
 const getSinglePayment = catchAsync(async (req, res) => {
@@ -59,8 +56,8 @@ const getSinglePayment = catchAsync(async (req, res) => {
   const paymentId = req.params.id;
 
   const result = await paymentService.getSinglePaymentDB(
-    paymentId as string,   
-    tenantId
+    paymentId as string,
+    tenantId,
   );
 
   SendResponse(res, {
@@ -69,9 +66,7 @@ const getSinglePayment = catchAsync(async (req, res) => {
     message: "Payment fetched successfully!",
     data: result,
   });
-
 });
-
 
 export const paymentController = {
   createPaymentSession,

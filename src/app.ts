@@ -15,36 +15,38 @@ import { adminRouter } from "./modules/admin/admin.route";
 
 const app: Application = express();
 
-app.use(cors({
-    origin: "http://localhost:3000",
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://rentnest-official.vercel.app"],
     credentials: true,
-}))
+  }),
+);
 
 // webhook
 app.post(
-    "/api/payments/confirm", 
-    express.raw({ type: () => true }), 
-    paymentController.confirmPayment
+  "/api/payments/confirm",
+  express.raw({ type: () => true }),
+  paymentController.confirmPayment,
 );
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
-    res.send("RentNest Backend Working!");
-})
+  res.send("RentNest Backend Working!");
+});
 
-app.use("/api/auth", authRouter)
-app.use("/api/categories", categoryRouter)
-app.use("/api", propertyRouter)
-app.use("/api/landlord/requests", rentalLandlordRouter)
-app.use("/api/rentals", rentalTenantRouter)
-app.use("/api/payments", paymentRouter)
-app.use("/api/reviews", reviewRouter)
-app.use("/api/admin", adminRouter)
+app.use("/api/auth", authRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api", propertyRouter);
+app.use("/api/landlord/requests", rentalLandlordRouter);
+app.use("/api/rentals", rentalTenantRouter);
+app.use("/api/payments", paymentRouter);
+app.use("/api/reviews", reviewRouter);
+app.use("/api/admin", adminRouter);
 
-app.use(notFoundRoute)
-app.use(globalErrorHandler)
+app.use(notFoundRoute);
+app.use(globalErrorHandler);
 
 export default app;

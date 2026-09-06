@@ -101,6 +101,24 @@ const getLandlordProperties = catchAsync(
   },
 );
 
+
+const getLandlordDashboard = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user!;
+
+    const result = await propertyService.getLandlordDashboardDB(
+      user.id
+    );
+
+    SendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: "Dashboard data fetched successfully!",
+      data: result,
+    });
+  }
+);
+
 export const propertyController = {
   createProperty,
   updateProperty,
@@ -108,4 +126,5 @@ export const propertyController = {
   getAllProperties,
   getSingleProperty,
   getLandlordProperties,
+  getLandlordDashboard,
 };

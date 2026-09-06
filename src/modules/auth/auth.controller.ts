@@ -3,6 +3,8 @@ import { catchAsync } from "../../utils/catchAsync";
 import { authService } from "./auth.service";
 import { SendResponse } from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
+import config from "../../config";
+
 
 const registerUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -51,6 +53,17 @@ const loginUser = catchAsync(
   },
 );
 
+const refreshToken = catchAsync(async (req: Request, res: Response) => {
+  const result = await authService.refreshTokenDB(req);
+
+  SendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "Access token generated successfully!",
+    data: result,
+  });
+});
+
 const getMe = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id;
@@ -65,8 +78,29 @@ const getMe = catchAsync(
   },
 );
 
+const googleCallback = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      throw new Error("Google user information not found.");
+    }
+
+    const result = await authService.googleLoginDB(req.user);
+
+    const redirectUrl = new URL(
+      `${config.frontend_url}/auth/google-success`,
+    );
+
+    redirectUrl.searchParams.set("accessToken", result.accessToken);
+    redirectUrl.searchParams.set("refreshToken", result.refreshToken);
+
+    return res.redirect(redirectUrl.toString());
+  },
+);
+
 export const authController = {
   registerUser,
   loginUser,
   getMe,
+  refreshToken,
+  googleCallback,
 };

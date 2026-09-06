@@ -7,10 +7,7 @@ import { rentalService } from "./rental.service";
 const createRental = catchAsync(async (req, res) => {
   const tenantId = req.user!.id;
 
-  const result = await rentalService.createRentalDB(
-    req.body,
-    tenantId
-  );
+  const result = await rentalService.createRentalDB(req.body, tenantId);
 
   SendResponse(res, {
     success: true,
@@ -18,7 +15,6 @@ const createRental = catchAsync(async (req, res) => {
     message: "Rental request submitted successfully!",
     data: result,
   });
-
 });
 
 const getMyRentals = catchAsync(async (req, res) => {
@@ -32,7 +28,6 @@ const getMyRentals = catchAsync(async (req, res) => {
     message: "Rental requests fetched successfully!",
     data: result,
   });
-
 });
 
 const getSingleRental = catchAsync(async (req, res) => {
@@ -41,7 +36,7 @@ const getSingleRental = catchAsync(async (req, res) => {
 
   const result = await rentalService.getSingleRentalDB(
     rentalId as string,
-    tenantId
+    tenantId,
   );
 
   SendResponse(res, {
@@ -50,7 +45,6 @@ const getSingleRental = catchAsync(async (req, res) => {
     message: "Single Rental request fetched successfully!",
     data: result,
   });
-
 });
 
 const getLandlordRequests = catchAsync(
@@ -64,8 +58,7 @@ const getLandlordRequests = catchAsync(
       message: "Rental requests fetched successfully!",
       data: requests,
     });
-
-  }
+  },
 );
 
 const updateRentalStatus = catchAsync(async (req, res) => {
@@ -76,7 +69,7 @@ const updateRentalStatus = catchAsync(async (req, res) => {
   const result = await rentalService.updateRentalStatusDB(
     id as string,
     landlordId,
-    status
+    status,
   );
 
   SendResponse(res, {
@@ -87,10 +80,36 @@ const updateRentalStatus = catchAsync(async (req, res) => {
   });
 });
 
+const getTenantActivity = catchAsync(async (req: Request, res: Response) => {
+  const result = await rentalService.getTenantActivityDB(req.user!.id);
+
+  SendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Activity fetched successfully!",
+    data: result,
+  });
+});
+
+const getTenantDashboard = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user?.id;
+
+  const result = await rentalService.getTenantDashboardDB(userId as string);
+
+  SendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "Tenant dashboard data fetched successfully",
+    data: result,
+  });
+});
+
 export const rentalController = {
   createRental,
   getMyRentals,
   getSingleRental,
   getLandlordRequests,
   updateRentalStatus,
+  getTenantActivity,
+  getTenantDashboard,
 };

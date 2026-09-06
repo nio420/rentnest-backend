@@ -2,11 +2,7 @@ import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { IProperty, IPropertyQuery } from "./property.interface";
 
-const createPropertyDB = async (
-  payload: IProperty,
-  landlordId: string
-) => {
-
+const createPropertyDB = async (payload: IProperty, landlordId: string) => {
   const isCategoryExist = await prisma.category.findUnique({
     where: {
       id: payload.categoryId,
@@ -41,9 +37,8 @@ const createPropertyDB = async (
 const updatePropertyDB = async (
   id: string,
   payload: IProperty,
-  landlordId: string
+  landlordId: string,
 ) => {
-
   const isPropertyExist = await prisma.property.findFirst({
     where: {
       id,
@@ -93,11 +88,7 @@ const updatePropertyDB = async (
   return property;
 };
 
-const deletePropertyDB = async (
-  id: string,
-  landlordId: string
-) => {
-
+const deletePropertyDB = async (id: string, landlordId: string) => {
   const isPropertyExist = await prisma.property.findFirst({
     where: {
       id,
@@ -115,7 +106,6 @@ const deletePropertyDB = async (
     },
   });
 };
-
 
 const getAllPropertiesDB = async (query: IPropertyQuery) => {
   const limit = query.limit ? Number(query.limit) : 10;
@@ -218,7 +208,6 @@ const getAllPropertiesDB = async (query: IPropertyQuery) => {
   };
 };
 
-
 const getSinglePropertyDB = async (id: string) => {
   const property = await prisma.property.findUniqueOrThrow({
     where: {
@@ -251,7 +240,6 @@ const getSinglePropertyDB = async (id: string) => {
   return property;
 };
 
-
 const getLandlordPropertiesDB = async (userId: string) => {
   const properties = await prisma.property.findMany({
     where: {
@@ -259,6 +247,23 @@ const getLandlordPropertiesDB = async (userId: string) => {
     },
     include: {
       category: true,
+
+      reviews: {
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
+          tenant: {
+            select: {
+              id: true,
+              name: true,
+              profilePhoto: true,
+            },
+          },
+        },
+      },
+
       landlord: {
         select: {
           id: true,
@@ -281,11 +286,51 @@ const getLandlordPropertiesDB = async (userId: string) => {
   return properties;
 };
 
+const getLandlordDashboardDB = async (landlordId: string) => {
+  const totalProperties = await prisma.property.count({
+    where: {
+      landlordId,
+    },
+  });
+
+  const activeRequests = await prisma.rentalRequest.count({
+    where: {
+      property: {
+        landlordId,
+      },
+      status: "PENDING",
+    },
+  });
+
+  const totalEarnings = await prisma.payment.aggregate({
+    _sum: {
+      amount: true,
+    },
+    where: {
+      rentalRequest: {
+        property: {
+          landlordId,
+        },
+      },
+      status: "PAID",
+    },
+  });
+
+  const TotalEarnings = totalEarnings._sum.amount ?? 0;
+
+  return {
+    totalProperties,
+    activeRequests,
+    TotalEarnings,
+  };
+};
+
 export const propertyService = {
   createPropertyDB,
   updatePropertyDB,
   deletePropertyDB,
   getAllPropertiesDB,
   getSinglePropertyDB,
-  getLandlordPropertiesDB
+  getLandlordPropertiesDB,
+  getLandlordDashboardDB,
 };

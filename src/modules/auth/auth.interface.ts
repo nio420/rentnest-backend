@@ -9,6 +9,12 @@ export interface IRegisterUser {
 }
 
 export interface IloginUser {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
+}
+
+export interface IGoogleUser {
+  name: string;
+  email: string;
+  profilePhoto?: string;
 }

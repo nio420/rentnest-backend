@@ -8,9 +8,23 @@ import { rentalValidation } from "./rental.validation";
 const router = Router();
 
 // Tenant
-router.get("/", auth(Role.TENANT), rentalController.getMyRentals)
-router.get("/:id", auth(Role.TENANT), rentalController.getSingleRental)
-router.post("/", auth(Role.TENANT), validateRequest(rentalValidation.createRentalValidationSchema), rentalController.createRental)
-
+router.get("/", auth(Role.TENANT), rentalController.getMyRentals);
+router.get("/:id", auth(Role.TENANT), rentalController.getSingleRental);
+router.get(
+  "/tenant/activity",
+  auth(Role.TENANT),
+  rentalController.getTenantActivity,
+);
+router.post(
+  "/",
+  auth(Role.TENANT),
+  validateRequest(rentalValidation.createRentalValidationSchema),
+  rentalController.createRental,
+);
+router.get(
+  "/tenant/dashboard",
+  auth(Role.TENANT),
+  rentalController.getTenantDashboard,
+);
 
 export const rentalTenantRouter = router;
